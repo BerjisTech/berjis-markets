@@ -1,33 +1,27 @@
-import { NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ValueProp } from './shared/models/value-prop.model';
+import { NgFor } from '@angular/common';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+
+interface NavLink {
+  path: string;
+  label: string;
+}
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgFor],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatToolbarModule, MatButtonModule, MatIconModule, NgFor],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  readonly valueProps: readonly ValueProp[] = [
-    {
-      title: 'Real-time trading',
-      description: 'WebSocket-native Angular shell designed to stream order books under 50 ms.'
-    },
-    {
-      title: 'Security and compliance',
-      description: 'Built for KYC, AML, and audit-first flows with strict linting plus testing gates.'
-    },
-    {
-      title: 'Scalable architecture',
-      description: 'NgRx-ready modules, lazy routes, and Dockerized builds tuned for rapid iteration.'
-    }
+  readonly navLinks: NavLink[] = [
+    { path: '/', label: 'Markets' },
+    { path: '/auth/login', label: 'Login' },
+    { path: '/auth/register', label: 'Register' }
   ];
-
-  trackByTitle(_: number, prop: ValueProp): string {
-    return prop.title;
-  }
 }

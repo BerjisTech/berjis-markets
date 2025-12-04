@@ -110,30 +110,30 @@ Each phase delivers a potentially shippable increment. A phase is complete only 
 ### Phase 1: Foundation and Core Infrastructure
 
 #### Backend Setup
-- [ ] Initialize Go project with clean module layout.
-- [ ] Configure PostgreSQL migrations via golang-migrate.
-- [ ] Add Redis client for caching and pub or sub.
-- [ ] Wire configuration management with Viper.
-- [ ] Integrate structured logging (Zap or Logrus).
-- [ ] Implement API gateway with rate limiting.
-- [ ] Add JWT auth middleware and CORS headers.
-- [ ] Provide health and readiness endpoints.
-- [ ] Package backend Dockerfile and Compose target.
+- [x] Initialize Go project with clean module layout.
+- [x] Configure PostgreSQL migrations via golang-migrate.
+- [x] Add Redis client for caching and pub or sub.
+- [x] Wire configuration management with Viper.
+- [x] Integrate structured logging (Zap or Logrus).
+- [x] Implement API gateway with rate limiting.
+- [x] Add JWT auth middleware and CORS headers.
+- [x] Provide health and readiness endpoints.
+- [x] Package backend Dockerfile and Compose target.
 
 #### Frontend Setup
-- [ ] Initialize Angular 17+ workspace with strict mode.
-- [ ] Install TailwindCSS and Angular Material.
-- [ ] Define routing skeleton and lazy loaded feature shells.
-- [ ] Add HTTP interceptors for auth and errors.
-- [ ] Create shared services module with API base service.
-- [ ] Configure NgRx store, effects, and router-store.
-- [ ] Set up environment.ts files for dev, staging, prod.
-- [ ] Implement global error and toast service.
-- [ ] Scaffold WebSocket service with retry logic.
+- [x] Initialize Angular 17+ workspace with strict mode.
+- [x] Install TailwindCSS and Angular Material.
+- [x] Define routing skeleton and lazy loaded feature shells.
+- [x] Add HTTP interceptors for auth and errors.
+- [x] Create shared services module with API base service.
+- [x] Configure NgRx store, effects, and router-store.
+- [x] Set up environment.ts files for dev, staging, prod.
+- [x] Implement global error and toast service.
+- [x] Scaffold WebSocket service with retry logic.
 
 #### Database Schema
-- [ ] Create tables for users, accounts, markets, orders, positions, transactions, market_resolutions, and audit_logs.
-- [ ] Add indexes on market_id, user_id, close_date, and status fields.
+- [x] Create tables for users, accounts, markets, orders, positions, transactions, market_resolutions, and audit_logs.
+- [x] Add indexes on market_id, user_id, close_date, and status fields.
 - [ ] Document relationships in Entity-Relationship diagram.
 
 ### Phase 2: User Management and Authentication

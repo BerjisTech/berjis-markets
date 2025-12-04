@@ -1,0 +1,22 @@
+<div class="space-y-4">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Search markets</mat-label>
+    <input matInput [formControl]="filterControl" placeholder="Search by name or category" />
+  </mat-form-field>
+
+  <div class="grid gap-4 md:grid-cols-2">
+    <mat-card *ngFor="let market of filtered$ | async" appearance="outlined" class="bg-white/5 text-white">
+      <mat-card-header>
+        <mat-card-title>{{ market.title }}</mat-card-title>
+        <mat-chip-set>
+          <mat-chip color="primary">{{ market.category }}</mat-chip>
+          <mat-chip>{{ market.status }}</mat-chip>
+        </mat-chip-set>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="text-sm text-white/70">Probability: {{ market.probability | percent:'1.0-0' }}</p>
+        <p class="text-sm text-white/70">Closes {{ market.closeDate | date }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

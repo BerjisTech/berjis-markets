@@ -1,26 +1,20 @@
-<main class="landing" aria-labelledby="hero-title">
-  <section class="hero">
-    <p class="eyebrow">Prediction market platform</p>
-    <h1 id="hero-title">Launch compliant, real-time binary markets faster</h1>
-    <p class="lead">
-      This Angular shell mirrors the product description document—WebSocket-native trading,
-      automated compliance, and lightning-fast UI updates for every critical workflow.
-    </p>
-    <div class="cta-row">
-      <button class="primary" type="button">Open Product Description</button>
-      <button class="ghost" type="button">View Launch Checklist</button>
-    </div>
-  </section>
-
-  <section class="value-grid" aria-label="Platform value propositions">
-    <article
-      class="value-card"
-      *ngFor="let prop of valueProps; trackBy: trackByTitle"
+<mat-toolbar color="primary" class="bg-brand-700">
+  <button mat-button routerLink="/" class="font-semibold text-white">
+    <mat-icon>timeline</mat-icon>
+    Markets
+  </button>
+  <span class="flex-1"></span>
+  <nav class="flex items-center gap-2">
+    <a
+      *ngFor="let link of navLinks"
+      mat-button
+      [routerLink]="link.path"
+      routerLinkActive="active"
+      class="text-white/80"
+      >{{ link.label }}</a
     >
-      <h2>{{ prop.title }}</h2>
-      <p>{{ prop.description }}</p>
-    </article>
-  </section>
-
+  </nav>
+</mat-toolbar>
+<main class="px-4 py-6 lg:px-8">
   <router-outlet></router-outlet>
 </main>

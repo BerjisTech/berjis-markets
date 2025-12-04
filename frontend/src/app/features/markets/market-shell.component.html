@@ -1,0 +1,10 @@
+<section class="space-y-6 text-white">
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <mat-card *ngFor="let highlight of highlights()" appearance="outlined" class="bg-white/5">
+      <mat-card-title>{{ highlight.title }}</mat-card-title>
+      <mat-card-content>{{ highlight.description }}</mat-card-content>
+    </mat-card>
+  </div>
+
+  <app-market-list></app-market-list>
+</section>
