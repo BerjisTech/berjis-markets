@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { map, startWith } from 'rxjs';
+import { Observable, map, startWith } from 'rxjs';
 
 import { MarketSummary } from '../../../../shared/models/market-summary.model';
 
@@ -25,11 +25,14 @@ export class MarketListComponent {
   ]);
 
   readonly filterControl = new FormControl('', { nonNullable: true });
+  readonly filtered$: Observable<MarketSummary[]>;
 
-  readonly filtered$ = this.filterControl.valueChanges.pipe(
-    startWith(''),
-    map((query) => this.filterMarkets(query ?? ''))
-  );
+  constructor() {
+    this.filtered$ = this.filterControl.valueChanges.pipe(
+      startWith(''),
+      map((query) => this.filterMarkets(query ?? ''))
+    );
+  }
 
   private filterMarkets(query: string): MarketSummary[] {
     const needle = query.toLowerCase();
