@@ -1,0 +1,85 @@
+x-frontend-app-name: &frontend-app markets-ui
+x-frontend-browser-volume: &frontend-browser-volume ./frontend/dist/markets-ui/browser:/usr/share/nginx/html:ro
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: markets-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: market
+      POSTGRES_PASSWORD: market
+      POSTGRES_DB: markets
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U market -d markets"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: markets-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: markets-backend
+    command: ["./market-api"]
+    environment:
+      PORT: "8080"
+      DATABASE_URL: postgres://market:market@postgres:5432/markets?sslmode=disable
+      REDIS_ADDR: redis:6379
+      REDIS_PASSWORD: ""
+      GIN_MODE: release
+    ports:
+      - "9080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8080/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - backend_data:/var/log/markets-backend
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        ANGULAR_APP_NAME: *frontend-app
+    container_name: markets-frontend
+    depends_on:
+      backend:
+        condition: service_started
+    ports:
+      - "9300:80"
+    environment:
+      API_BASE_URL: http://backend:8080
+    # Bind-mount the Angular browser output so new builds update without restarting the container.
+    volumes:
+      - *frontend-browser-volume
+
+volumes:
+  postgres_data:
+  redis_data:
+  backend_data:
